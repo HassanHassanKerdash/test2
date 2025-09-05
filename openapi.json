@@ -1,0 +1,124 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "API Documentation",
+    "version": "1.0.0",
+    "description": "API documentation generated from JSDoc comments"
+  },
+  "paths": {
+    "/settings": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SettingsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Settings"
+        ],
+        "summary": "الحصول على إعدادات المستخدم",
+        "description": "إرجاع إعدادات المستخدم الحالية",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "operationId": "getUserSettings"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UserSettings": {
+        "type": "object",
+        "properties": {
+          "theme": {
+            "type": "string",
+            "enum": [
+              "light",
+              "dark"
+            ]
+          },
+          "language": {
+            "type": "string"
+          },
+          "notifications": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "theme",
+          "language",
+          "notifications"
+        ],
+        "example": {
+          "theme": "dark",
+          "language": "ar",
+          "notifications": true
+        }
+      },
+      "SettingsResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "settings": {
+            "$ref": "#/components/schemas/UserSettings"
+          }
+        },
+        "required": [
+          "message",
+          "settings"
+        ]
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "code": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "error",
+          "message"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Settings"
+    }
+  ]
+}
